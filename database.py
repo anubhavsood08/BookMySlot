@@ -11,14 +11,22 @@ load_dotenv()
 # If not set, use a default SQLite database
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./bookmyslot.db")
 
+# Handle PostgreSQL URL format for Render
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
 # The engine is the entry point to the database.
 # It's configured with the database URL and some settings for connection pooling.
-engine = create_engine(
-    DATABASE_URL, 
-    # The 'connect_args' is specific to SQLite. It's needed to allow
-    # the database connection to be shared across different threads.
-    connect_args={"check_same_thread": False}
-)
+if DATABASE_URL.startswith("sqlite"):
+    engine = create_engine(
+        DATABASE_URL, 
+        # The 'connect_args' is specific to SQLite. It's needed to allow
+        # the database connection to be shared across different threads.
+        connect_args={"check_same_thread": False}
+    )
+else:
+    # For PostgreSQL (production)
+    engine = create_engine(DATABASE_URL)
 
 # Each instance of SessionLocal will be a new database session.
 # The session is the primary interface for all database operations.

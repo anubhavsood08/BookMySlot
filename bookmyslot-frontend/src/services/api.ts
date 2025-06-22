@@ -2,7 +2,8 @@ import axios from 'axios';
 import { Event, EventDetail, EventCreate, Booking, BookingCreate } from '../types';
 
 // Configure axios to connect to our FastAPI backend
-const API_BASE_URL = 'http://127.0.0.1:8000';
+// Use environment variable for production, fallback to localhost for development
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
