@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from database import engine
 import models
 from routes import events, bookings
@@ -16,6 +17,15 @@ app = FastAPI(
     title="BookMySlot API",
     description="A simple API for booking event slots, inspired by Calendly.",
     version="0.1.0",
+)
+
+# Add CORS middleware to allow frontend requests
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],  # React dev server
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Include the routers from the routes module.

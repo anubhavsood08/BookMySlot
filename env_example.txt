@@ -1,0 +1,33 @@
+# Email Configuration
+# Copy this file to .env and fill in your actual email credentials
+
+# For Gmail (recommended for development)
+MAIL_USERNAME=your-email@gmail.com
+MAIL_PASSWORD=your-app-password
+MAIL_FROM=your-email@gmail.com
+MAIL_SERVER=smtp.gmail.com
+MAIL_PORT=587
+
+# For Outlook/Hotmail
+# MAIL_USERNAME=your-email@outlook.com
+# MAIL_PASSWORD=your-password
+# MAIL_FROM=your-email@outlook.com
+# MAIL_SERVER=smtp-mail.outlook.com
+# MAIL_PORT=587
+
+# For Yahoo
+# MAIL_USERNAME=your-email@yahoo.com
+# MAIL_PASSWORD=your-app-password
+# MAIL_FROM=your-email@yahoo.com
+# MAIL_SERVER=smtp.mail.yahoo.com
+# MAIL_PORT=587
+
+# For Mailtrap (testing)
+# MAIL_USERNAME=your-mailtrap-username
+# MAIL_PASSWORD=your-mailtrap-password
+# MAIL_FROM=your-mailtrap-email
+# MAIL_SERVER=smtp.mailtrap.io
+# MAIL_PORT=2525
+
+# Database Configuration (SQLite by default)
+DATABASE_URL=sqlite:///./bookmyslot.db 
