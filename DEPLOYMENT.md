@@ -78,6 +78,13 @@ allow_origins=[
 
 2. **Test Frontend**: Visit your Vercel frontend URL and try creating an event
 
+## Database Information
+
+**Current Setup**: SQLAlchemy with SQLite (local) / PostgreSQL (production)
+- **Local Development**: Uses SQLite database (`bookmyslot.db`)
+- **Production**: Uses PostgreSQL database on Render
+- **Models**: Event, TimeSlot, Booking (SQLAlchemy ORM)
+
 ## Troubleshooting
 
 ### Common Issues:

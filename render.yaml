@@ -10,4 +10,9 @@ services:
       - key: DATABASE_URL
         fromDatabase:
           name: bookmyslot-db
-          property: connectionString 
+          property: connectionString
+
+databases:
+  - name: bookmyslot-db
+    databaseName: bookmyslot_db
+    user: bookmyslot_user 
