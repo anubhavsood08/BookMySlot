@@ -27,6 +27,17 @@ const EventList: React.FC = () => {
     }
   };
 
+  const handleDelete = async (eventId: number) => {
+    if (window.confirm('Are you sure you want to delete this event?')) {
+      try {
+        await eventApi.deleteEvent(eventId);
+        fetchEvents();
+      } catch (err) {
+        alert('Failed to delete event.');
+      }
+    }
+  };
+
   if (loading) {
     return (
       <div className="container">
@@ -81,6 +92,9 @@ const EventList: React.FC = () => {
                 <Link to={`/event/${event.id}`} className="view-btn">
                   View Details & Book
                 </Link>
+                <button onClick={() => handleDelete(event.id)} className="delete-btn" style={{ marginLeft: '10px', color: 'white', background: 'red', border: 'none', borderRadius: '4px', padding: '6px 12px', cursor: 'pointer' }}>
+                  Delete
+                </button>
               </div>
             </div>
           ))}

@@ -28,7 +28,7 @@ class Booking(BookingBase):
     created_at: datetime.datetime
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 # ==================================
 #       TimeSlot Schemas
@@ -50,7 +50,7 @@ class TimeSlot(TimeSlotBase):
     bookings: List[Booking] = [] # A list of booking objects
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 # ==================================
 #        Event Schemas
@@ -73,7 +73,7 @@ class Event(EventBase):
     id: int
     
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 # Schema for reading a single event with all its details.
 # It includes the list of associated time slots.

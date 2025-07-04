@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from typing import List
 from database import get_db
 import models, schemas
@@ -83,8 +83,11 @@ def get_all_events(db: Session = Depends(get_db)):
     Returns:
         List[Event]: List of all events with basic metadata
     """
-    events = db.query(models.Event).all()
-    return events
+    events = db.query(models.Event).options(joinedload(models.Event.time_slots)).all()
+    result = [schemas.Event.from_orm(event) for event in events]
+    print("DEBUG: Returning events:", result)
+    print("DEBUG: Type of first event:", type(result[0]) if result else "No events")
+    return result
 
 @router.get("/{event_id}", response_model=schemas.EventDetail)
 def get_event(event_id: int, db: Session = Depends(get_db)):
@@ -110,4 +113,21 @@ def get_event(event_id: int, db: Session = Depends(get_db)):
             detail=f"Event with ID {event_id} not found"
         )
     
-    return event 
+    return event
+
+@router.delete("/{event_id}", status_code=204)
+def delete_event(event_id: int, db: Session = Depends(get_db)):
+    """
+    Delete an event by its ID. Also deletes all related time slots and bookings (cascade).
+    Args:
+        event_id: The ID of the event to delete
+        db: Database session (automatically provided by FastAPI)
+    Returns:
+        204 No Content on success, 404 if not found
+    """
+    event = db.query(models.Event).filter(models.Event.id == event_id).first()
+    if not event:
+        raise HTTPException(status_code=404, detail="Event not found")
+    db.delete(event)
+    db.commit()
+    return {"detail": "Event deleted"} 

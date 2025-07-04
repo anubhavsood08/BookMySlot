@@ -16,20 +16,25 @@ const api = axios.create({
 export const eventApi = {
   // Get all events
   getAllEvents: async (): Promise<Event[]> => {
-    const response = await api.get('/events');
+    const response = await api.get('/events/');
     return response.data;
   },
 
   // Get single event with details
   getEvent: async (eventId: number): Promise<EventDetail> => {
-    const response = await api.get(`/events/${eventId}`);
+    const response = await api.get(`/events/${eventId}/`);
     return response.data;
   },
 
   // Create new event
   createEvent: async (eventData: EventCreate): Promise<EventDetail> => {
-    const response = await api.post('/events', eventData);
+    const response = await api.post('/events/', eventData);
     return response.data;
+  },
+
+  // Delete event
+  deleteEvent: async (eventId: number): Promise<void> => {
+    await api.delete(`/events/${eventId}/`);
   },
 };
 

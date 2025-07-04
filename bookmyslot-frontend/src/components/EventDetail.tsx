@@ -45,6 +45,10 @@ const EventDetail: React.FC = () => {
       setBookingError('Please fill in all fields and select a time slot.');
       return;
     }
+    if (!bookingForm.user_email.includes('@')) {
+      setBookingError('Please enter a valid email address containing "@".');
+      return;
+    }
 
     try {
       setBookingLoading(true);
